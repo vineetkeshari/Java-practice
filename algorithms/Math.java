@@ -8,6 +8,19 @@ public class Math {
         System.out.println (abs(-2));
         System.out.println ();
         
+        System.out.println ("Test sqrt..");
+        System.out.println ("1 : " + sqrt(1));
+        System.out.println ("2 : " + sqrt(2));
+        System.out.println ("3 : " + sqrt(3));
+        System.out.println ("4 : " + sqrt(4));
+        System.out.println ("9 : " + sqrt(9));
+        System.out.println ("16 : " + sqrt(16));
+        System.out.println ("25 : " + sqrt(25));
+        System.out.println ("100 : " + sqrt(100));
+        System.out.println ("1000 : " + sqrt(1000));
+        System.out.println ("10000 : " + sqrt(10000));
+        System.out.println ();
+        
         System.out.println ("Test isPrime..");
         System.out.println ("1 : " + isPrime(1));
         System.out.println ("2 : " + isPrime(2));
@@ -50,7 +63,7 @@ public class Math {
         double estimate = n/2, last = n, original = n;
         while (abs(last-estimate) > THRESH) {
             last = estimate;
-            estimate = estimate/2 + original/estimate;
+            estimate = (estimate + original/estimate)/2;
         }
         return estimate;
     }

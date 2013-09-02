@@ -6,7 +6,8 @@ public class HashTable {
     public static void main (String[] args) {
         String[] lotsOfVals = new String[]{"hello", "my", "name", "is", "this", "i", "am", "a", "class",
                 "a", "class", "is", "a", "data", "type", "this", "is", "true", "promise", "you", "have",
-                "my", "word", "i", "am", "sure", "this", "is", "my", "name", "this", "is", "true"};
+                "my", "word", "i", "am", "sure", "this", "is", "my", "name", "this", "is", "a", "word",
+                "true", "is", "a", "word", "this", "is", "true"};
         HashTable h1 = new HashTable(lotsOfVals);
         System.out.println (h1);
         System.out.println ();
