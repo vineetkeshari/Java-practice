@@ -3,6 +3,8 @@ package data.binarytree;
 import data.binarytree.Node;
 import java.util.Queue;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class BinaryTree {
 	private Node root;
@@ -88,4 +90,45 @@ public class BinaryTree {
 		System.out.println (node + " depth: " + depth);
 		inOrderPrint (node.getRight(), depth+1);
 	}
+	
+	public String serialize () {
+	    StringBuffer sb = new StringBuffer();
+	    serialize(root, sb);
+	    return new String(sb);
+	}
+	
+	private void serialize (Node n, StringBuffer sb) {
+	    if (n == null) {
+	        sb.append("N ");
+	        return;
+	    }
+	    sb.append(n.getItem() + " ");
+	    serialize (n.getLeft(), sb);
+	    serialize (n.getRight(), sb);
+	}
+	
+	public static BinaryTree deserialize (String s) {
+	    if (s.equals("N ") || s.equals(" ") || s.equals(""))
+	        return null;
+	    ArrayList<String> nodes = new ArrayList<String>();
+	    for (String val : s.split(" "))
+	        nodes.add (val);
+	    BinaryTree b = new BinaryTree(new int[]{});
+	    b.setRoot (deserialize (nodes.iterator()));
+	    return b;
+	}
+	
+	private static Node deserialize (Iterator<String> nodes) {
+	    if (!nodes.hasNext())
+	        return null;
+	    String newVal = nodes.next();
+	    if (newVal.equals("N"))
+	        return null;
+	    Node n = new Node (Integer.parseInt(newVal));
+	    n.setLeft (deserialize(nodes));
+	    n.setRight (deserialize(nodes));
+	    return n;
+	}
+	        
+	    
 }

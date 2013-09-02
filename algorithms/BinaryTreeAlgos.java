@@ -78,6 +78,13 @@ public class BinaryTreeAlgos {
 		System.out.println(secondLargestInorder(b12));
 		System.out.println();
 		
+		System.out.println("Test serialize and deserialize");
+        System.out.println(b12);
+		String ser = b12.serialize();
+		System.out.println(ser);
+		System.out.println(BinaryTree.deserialize(ser));
+        System.out.println();
+		
 	}
 
 	public static void inOrder (BinaryTree btree) {
