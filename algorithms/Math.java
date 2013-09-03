@@ -2,6 +2,12 @@ package algorithms;
 
 public class Math {
     public static void main (String[] args) {
+        System.out.println ("Test pow..");
+        System.out.println (pow(0,0));
+        System.out.println (pow(1,5));
+        System.out.println (pow(5,2));
+        System.out.println ();
+        
         System.out.println ("Test abs..");
         System.out.println (abs(0));
         System.out.println (abs(1.5));
@@ -50,7 +56,12 @@ public class Math {
         System.out.println ("111\t37:\t" + gcd(111,37));
         System.out.println ();
     }
-        
+    
+    public static double pow (double n, double p) {
+    	if (p == 0)
+    		return 1;
+    	return n * pow (n, p-1);
+    }
     
     public static double abs (double n) {
         return (n >= 0)? n : -n;
