@@ -92,7 +92,7 @@ public class Math {
     
     public static int gcd (int x, int y) {
         int mod = x%y;
-        return (mod == 0)? y : gcd (y, x%y);
+        return (mod == 0)? y : gcd (y, mod);
     }
 
 }
