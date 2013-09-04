@@ -105,5 +105,9 @@ public class Math {
         int mod = x%y;
         return (mod == 0)? y : gcd (y, mod);
     }
+    
+    public static double random () {
+        return java.lang.Math.random();
+    }
 
 }

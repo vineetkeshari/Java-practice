@@ -1,4 +1,4 @@
-package algorithms.sort;
+package algorithms;
 
 public class Sort {
     public static void main (String[] args) {
