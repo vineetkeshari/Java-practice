@@ -1,5 +1,8 @@
 package algorithms;
 
+import java.util.ArrayList;
+import algorithms.Math;
+
 public class Sort {
     public static final int MAXVAL = 100;
     
@@ -10,45 +13,54 @@ public class Sort {
         smallArray = generateRandomArray(100);
         mediumArray = duplicateNTimes (smallArray, 10);
         largeArray = duplicateNTimes (mediumArray, 10);
-        mergeSort(smallArray);
-        mergeSort(mediumArray);
-        mergeSort(largeArray);
+        mergeSort(smallArray, true);
+        mergeSort(mediumArray, true);
+        mergeSort(largeArray, true);
         System.out.println ();
         
         System.out.println ("Test insertion sort");
         smallArray = generateRandomArray(100);
         mediumArray = duplicateNTimes (smallArray, 10);
         largeArray = duplicateNTimes (mediumArray, 10);
-        insertionSort(smallArray);
-        insertionSort(mediumArray);
-        insertionSort(largeArray);
+        insertionSort(smallArray, true);
+        insertionSort(mediumArray, true);
+        insertionSort(largeArray, true);
         System.out.println ();
         
         System.out.println ("Test quick sort");
         smallArray = generateRandomArray(100);
         mediumArray = duplicateNTimes (smallArray, 10);
         largeArray = duplicateNTimes (mediumArray, 10);
-        quickSort(smallArray);
-        quickSort(mediumArray);
-        quickSort(largeArray);
+        quickSort(smallArray, true);
+        quickSort(mediumArray, true);
+        quickSort(largeArray, true);
         System.out.println ();
         
         System.out.println ("Test randomized quick sort");
         smallArray = generateRandomArray(100);
         mediumArray = duplicateNTimes (smallArray, 10);
         largeArray = duplicateNTimes (mediumArray, 10);
-        randomizedQuickSort(smallArray);
-        randomizedQuickSort(mediumArray);
-        randomizedQuickSort(largeArray);
+        randomizedQuickSort(smallArray, true);
+        randomizedQuickSort(mediumArray, true);
+        randomizedQuickSort(largeArray, true);
         System.out.println ();
         
         System.out.println ("Test counting sort");
         smallArray = generateRandomArray(100);
         mediumArray = duplicateNTimes (smallArray, 10);
         largeArray = duplicateNTimes (mediumArray, 10);
-        countingSort(smallArray);
-        countingSort(mediumArray);
-        countingSort(largeArray);
+        countingSort(smallArray, true);
+        countingSort(mediumArray, true);
+        countingSort(largeArray, true);
+        System.out.println ();
+        
+        System.out.println ("Test bucket sort");
+        smallArray = generateRandomArray(100);
+        mediumArray = duplicateNTimes (smallArray, 10);
+        largeArray = duplicateNTimes (mediumArray, 10);
+        bucketSort(smallArray, true);
+        bucketSort(mediumArray, true);
+        bucketSort(largeArray, true);
         System.out.println ();
     }
     
@@ -73,12 +85,13 @@ public class Sort {
         System.out.println();
     }
     
-    public static void mergeSort (int[] nums) {
+    public static void mergeSort (int[] nums, boolean showTiming) {
         long start = System.nanoTime( );
         mergeSort (nums, 0, nums.length);
         long end = System.nanoTime( );
         //printArray (nums);
-        System.out.println((end-start) + " nanos to sort " + nums.length + " elements.");
+        if (showTiming)
+            System.out.println((end-start) + " nanos to sort " + nums.length + " elements.");
     }
     
     private static void mergeSort (int[] nums, int start, int end) {
@@ -107,7 +120,7 @@ public class Sort {
             nums[start+i] = temp[i];
     }
     
-    public static void insertionSort (int[] nums) {
+    public static void insertionSort (int[] nums, boolean showTiming) {
         long start = System.nanoTime( );
         for (int i=1; i<nums.length; ++i)
             for (int j=i; j>0 && nums[j-1]>nums[j]; --j) {
@@ -117,23 +130,26 @@ public class Sort {
             }
         long end = System.nanoTime( );
         //printArray (nums);
-        System.out.println((end-start) + " nanos to sort " + nums.length + " elements.");
+        if (showTiming)
+            System.out.println((end-start) + " nanos to sort " + nums.length + " elements.");
     }
     
-    public static void quickSort (int[] nums) {
+    public static void quickSort (int[] nums, boolean showTiming) {
         long start = System.nanoTime( );
         quickSort (nums, 0, nums.length, false);
         long end = System.nanoTime( );
         //printArray (nums);
-        System.out.println((end-start) + " nanos to sort " + nums.length + " elements.");
+        if (showTiming)
+            System.out.println((end-start) + " nanos to sort " + nums.length + " elements.");
     }
     
-    public static void randomizedQuickSort (int[] nums) {
+    public static void randomizedQuickSort (int[] nums, boolean showTiming) {
         long start = System.nanoTime( );
         quickSort (nums, 0, nums.length, true);
         long end = System.nanoTime( );
         //printArray (nums);
-        System.out.println((end-start) + " nanos to sort " + nums.length + " elements.");
+        if (showTiming)
+            System.out.println((end-start) + " nanos to sort " + nums.length + " elements.");
     }
     
     private static void quickSort (int[] nums, int start, int end, boolean randomize) {
@@ -166,7 +182,7 @@ public class Sort {
         return s;
     }
     
-    public static void countingSort (int[] nums) {
+    public static void countingSort (int[] nums, boolean showTiming) {
         long start = System.nanoTime( );
         int[] counts = new int[MAXVAL];
         for (int num : nums) {
@@ -178,7 +194,48 @@ public class Sort {
                 nums[index++] = i;
         long end = System.nanoTime( );
         //printArray(nums);
-        System.out.println((end-start) + " nanos to sort " + nums.length + " elements.");
-    }           
-                
+        if (showTiming)
+            System.out.println((end-start) + " nanos to sort " + nums.length + " elements.");
+    }
+    
+    public static void bucketSort (int[] nums, boolean showTiming) {
+        long start = System.nanoTime( );
+        final int BUCKETSIZE = (int)(Math.sqrt(MAXVAL));
+        Bucket[] buckets = new Bucket[MAXVAL/BUCKETSIZE+1];
+        for (int i=0; i<buckets.length; ++i)
+            buckets[i] = new Bucket();
+        for (int i : nums) {
+            int bucket = i/BUCKETSIZE;
+            buckets[bucket].numbersList.add(i);
+        }
+        int base=0;
+        for (int i=0; i<buckets.length; ++i) {
+            arrayListToArray(buckets[i]);
+            quickSort (buckets[i].numbers, false);
+            addAll (nums, buckets[i].numbers, base);
+            base += buckets[i].numbers.length;
+        }
+        long end = System.nanoTime( );
+        //printArray(nums);
+        if (showTiming)
+            System.out.println((end-start) + " nanos to sort " + nums.length + " elements.");
+    }
+    
+    private static class Bucket {
+        public ArrayList<Integer> numbersList = new ArrayList<Integer>();
+        public int[] numbers;
+    }
+    
+    private static void arrayListToArray (Bucket b) {
+        b.numbers = new int[b.numbersList.size()];
+        for (int i=0; i<b.numbers.length; ++i)
+            b.numbers[i] = b.numbersList.get(i);
+        b.numbersList = null;
+    }
+    
+    private static void addAll (int[] nums, int[] bucket, int base) {
+        for (int i=0; i<bucket.length; ++i)
+            nums[base+i] = bucket[i];
+    }
+        
 }
