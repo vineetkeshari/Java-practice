@@ -13,10 +13,33 @@ public class BinaryTreeAlgos {
 		System.out.println(b1);
 		b1.treeInsert(-1);
 		System.out.println(b1);
+        System.out.println();
 		
 		System.out.println("Test breadth-first code");
 		b1.breadthFirst();
 		System.out.println();
+        System.out.println();
+        
+        System.out.println("Test find code");
+        System.out.println (b1.treeFind(0));
+        System.out.println (b1.treeFind(5));
+        System.out.println (b1.treeFind(8));
+        System.out.println (b1.treeFind(13));
+        System.out.println();
+        
+        System.out.println("Test predecessor code");
+        System.out.println (b1.treePredecessor(0));
+        System.out.println (b1.treePredecessor(5));
+        System.out.println (b1.treePredecessor(8));
+        System.out.println (b1.treePredecessor(13));
+        System.out.println();
+        
+        System.out.println("Test successor code");
+        System.out.println (b1.treeSuccessor(0));
+        System.out.println (b1.treeSuccessor(5));
+        System.out.println (b1.treeSuccessor(8));
+        System.out.println (b1.treeSuccessor(13));
+        System.out.println();
 		
 		System.out.println("Test least common ancestor code");
 		System.out.println (leastCommonAncestor(b1,0,9));
@@ -131,7 +154,7 @@ public class BinaryTreeAlgos {
 		if (n == null)
 			return maxDepth;
 		if (maxDepth < depth) {
-			System.out.println(n + " depth: " + depth);
+			System.out.print(n + "(" + depth + ") ");
 			maxDepth = depth;
 		}
 		maxDepth = leftView (n.getLeft(), depth+1, maxDepth);

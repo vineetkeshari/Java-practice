@@ -13,6 +13,14 @@ public class BinaryTree {
 		for (int item : items)
 			treeInsert (item);
 	}
+    
+    public Node getRoot() {
+        return root;
+    }
+    
+    public void setRoot (Node node) {
+        root = node;
+    }
 	
 	public void treeInsert (int[] items) {
 		for (int item : items)
@@ -39,14 +47,79 @@ public class BinaryTree {
 				insert (node.getRight(), item);
 	}
 	
-	public Node getRoot() {
-		return root;
+	public Node treeFind (int item) {
+	    ChildAndParent cap = new ChildAndParent();
+	    treeFind (root, null, item, cap);
+	    return cap.n;
 	}
 	
-	public void setRoot (Node node) {
-		root = node;
+	private class ChildAndParent {
+	    public Node n;
+	    public Node parent;
 	}
 	
+	private void treeFind (Node n, Node p, int item, ChildAndParent cap) {
+	    if (n == null || cap.n != null && cap.parent != null)
+	        return;
+	    else if (item == n.getItem()) {
+	        cap.n = n;
+	        cap.parent = p;
+	    } else if (item < n.getItem())
+	        treeFind (n.getLeft(), n, item, cap);
+	    else
+	        treeFind (n.getRight(), n, item, cap);
+	}
+	
+	public Node treeSuccessor (int item) {
+	    ChildAndParent cap = new ChildAndParent();
+	    treeFind (root, null, item, cap);
+	    if (cap.n == null)
+	        return null;
+	    return treeSuccessor (cap.n, cap.parent);
+	}
+	
+	private Node treeSuccessor (Node n, Node p) {
+	    if (n.getRight() == null)
+	        if (p == null || p.getRight() == n)
+	            return null;
+	        else
+	            return p;
+	    else
+	        return treeMin (n.getRight());
+	}
+	
+	private Node treeMin (Node n) {
+	    if (n.getLeft() == null)
+	        return n;
+	    else
+	        return treeMin (n.getLeft());
+	}
+    
+    public Node treePredecessor (int item) {
+        ChildAndParent cap = new ChildAndParent();
+        treeFind (root, null, item, cap);
+        if (cap.n == null)
+            return null;
+        return treePredecessor (cap.n, cap.parent);
+    }
+    
+    private Node treePredecessor (Node n, Node p) {
+        if (n.getLeft() == null)
+            if (p == null || p.getLeft() == n)
+                return null;
+            else
+                return p;
+        else
+            return treeMax (n.getLeft());
+    }
+    
+    private Node treeMax (Node n) {
+        if (n.getRight() == null)
+            return n;
+        else
+            return treeMax (n.getRight());
+    }
+    
 	public Node getParent (Node n) {
 		Node t = root;
 		if (t == n)
@@ -70,7 +143,7 @@ public class BinaryTree {
 		q.add (root);
 		while (!q.isEmpty()) {
 			Node n = q.remove();
-			System.out.println(n);
+			System.out.print(n + " ");
 			if (n.getLeft() != null)
 				q.add (n.getLeft());
 			if (n.getRight() != null)
@@ -87,7 +160,7 @@ public class BinaryTree {
 		if (node == null)
 			return;
 		inOrderPrint (node.getLeft(), depth+1);
-		System.out.println (node + " depth: " + depth);
+		System.out.print (node + "(" + depth + ") ");
 		inOrderPrint (node.getRight(), depth+1);
 	}
 	
