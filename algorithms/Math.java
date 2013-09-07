@@ -58,9 +58,9 @@ public class Math {
     }
     
     public static double pow (double n, double p) {
-    	if (p == 0)
-    		return 1;
-    	return n * pow (n, p-1);
+        if (p == 0)
+            return 1;
+        return n * pow (n, p-1);
     }
     
     public static double abs (double n) {
