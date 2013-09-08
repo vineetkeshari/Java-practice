@@ -4,13 +4,13 @@ import java.util.ArrayList;
 import algorithms.Math;
 
 public class Sort {
-    public static final int MAXVAL = 100;
+    public static final int MAXVAL = 1000;
     
     public static void main (String[] args) {
         int[] smallArray, mediumArray, largeArray;
         
         System.out.println ("Test merge sort");
-        smallArray = generateRandomArray(100);
+        smallArray = generateRandomArray(MAXVAL);
         mediumArray = duplicateNTimes (smallArray, 10);
         largeArray = duplicateNTimes (mediumArray, 10);
         mergeSort(smallArray, true);
@@ -19,7 +19,7 @@ public class Sort {
         System.out.println ();
         
         System.out.println ("Test insertion sort");
-        smallArray = generateRandomArray(100);
+        smallArray = generateRandomArray(MAXVAL);
         mediumArray = duplicateNTimes (smallArray, 10);
         largeArray = duplicateNTimes (mediumArray, 10);
         insertionSort(smallArray, true);
@@ -28,7 +28,7 @@ public class Sort {
         System.out.println ();
         
         System.out.println ("Test quick sort");
-        smallArray = generateRandomArray(100);
+        smallArray = generateRandomArray(MAXVAL);
         mediumArray = duplicateNTimes (smallArray, 10);
         largeArray = duplicateNTimes (mediumArray, 10);
         quickSort(smallArray, true);
@@ -37,7 +37,7 @@ public class Sort {
         System.out.println ();
         
         System.out.println ("Test randomized quick sort");
-        smallArray = generateRandomArray(100);
+        smallArray = generateRandomArray(MAXVAL);
         mediumArray = duplicateNTimes (smallArray, 10);
         largeArray = duplicateNTimes (mediumArray, 10);
         randomizedQuickSort(smallArray, true);
@@ -46,7 +46,7 @@ public class Sort {
         System.out.println ();
         
         System.out.println ("Test counting sort");
-        smallArray = generateRandomArray(100);
+        smallArray = generateRandomArray(MAXVAL);
         mediumArray = duplicateNTimes (smallArray, 10);
         largeArray = duplicateNTimes (mediumArray, 10);
         countingSort(smallArray, true);
@@ -55,7 +55,7 @@ public class Sort {
         System.out.println ();
         
         System.out.println ("Test bucket sort");
-        smallArray = generateRandomArray(100);
+        smallArray = generateRandomArray(MAXVAL);
         mediumArray = duplicateNTimes (smallArray, 10);
         largeArray = duplicateNTimes (mediumArray, 10);
         bucketSort(smallArray, true);
