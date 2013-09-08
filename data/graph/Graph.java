@@ -53,10 +53,14 @@ public class Graph {
             return null;
     }
     
+    public void flushFlags () {
+        for (Node n : nodes)
+            n.clearVisited();
+    }
+    
     public String toString () {
         for (Node n : nodes)
-            System.out.print(n + ",\t");
-        System.out.println();
+            System.out.print(n + ", ");
         return "";
     }
 

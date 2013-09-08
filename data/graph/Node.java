@@ -5,9 +5,22 @@ import java.util.HashMap;
 public class Node {
     private int item;
     private HashMap<Node,Integer> neighbors = new HashMap<Node,Integer>();
+    private boolean visited;
     
     public Node (int num) {
         item = num;
+    }
+    
+    public void visit () {
+        visited = true;
+    }
+    
+    public void clearVisited () {
+        visited = false;
+    }
+    
+    public boolean visited () {
+        return visited;
     }
     
     public int getItem() {
