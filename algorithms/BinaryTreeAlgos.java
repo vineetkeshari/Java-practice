@@ -2,6 +2,7 @@ package algorithms;
 
 import data.binarytree.BinaryTree;
 import data.binarytree.Node;
+import data.binarytree.SplayTree;
 import java.util.ArrayList;
 
 public class BinaryTreeAlgos {
@@ -106,6 +107,30 @@ public class BinaryTreeAlgos {
         String ser = b12.serialize();
         System.out.println(ser);
         System.out.println(BinaryTree.deserialize(ser));
+        System.out.println();
+        
+        System.out.println("Test splay tree methods");
+        SplayTree s1 = new SplayTree();
+        s1.treeInsert (1);
+        System.out.println(s1);
+        s1.treeInsert (2);
+        System.out.println(s1);
+        s1.treeInsert (4);
+        System.out.println(s1);
+        s1.treeInsert (3);
+        System.out.println(s1);
+        s1.treeInsert (7);
+        System.out.println(s1);
+        s1.treeInsert (6);
+        System.out.println(s1);
+        s1.treeDelete (6);
+        System.out.println(s1);
+        s1.treeDelete (1);
+        System.out.println(s1);
+        s1.treeDelete (4);
+        System.out.println(s1);
+        s1.treeDelete (5);
+        System.out.println(s1);
         System.out.println();
         
     }
