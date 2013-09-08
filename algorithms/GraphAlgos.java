@@ -2,6 +2,8 @@ package algorithms;
 
 import data.graph.Node;
 import data.graph.Graph;
+import java.util.Queue;
+import java.util.ArrayDeque;
 
 public class GraphAlgos {
     public static void main (String[] args) {
@@ -41,26 +43,43 @@ public class GraphAlgos {
         g1.addEdge (n8,n9,(int)(Math.random()*10));
         g1.addEdge (n9,n7,(int)(Math.random()*10));
         g1.addEdge (n9,n0,(int)(Math.random()*10));
+        g1.addEdge (n9,n1,(int)(Math.random()*10));
+        g1.addEdge (n1,n9,(int)(Math.random()*10));
         System.out.println (g1);
-        g1.removeAnyEdge (n9,n0);
+        g1.removeEdge (n9,n0);
+        System.out.println (g1);
+        g1.removeEdge (n0,n9);
+        System.out.println (g1);
+        g1.removeAnyEdge (n9,n1);
         System.out.println (g1);
         System.out.println ();
 
         System.out.println("Test depth first search (random root)");
-        System.out.println (depthFirstSearch(g1,5));
-        System.out.println (depthFirstSearch(g1,3));
+        System.out.println (depthFirstSearch(g1,0));
+        System.out.println (depthFirstSearch(g1,1));
         System.out.println (depthFirstSearch(g1,2));
+        System.out.println (depthFirstSearch(g1,3));
+        System.out.println (depthFirstSearch(g1,4));
+        System.out.println (depthFirstSearch(g1,5));
+        System.out.println (depthFirstSearch(g1,6));
+        System.out.println (depthFirstSearch(g1,7));
+        System.out.println (depthFirstSearch(g1,8));
+        System.out.println (depthFirstSearch(g1,9));
+        System.out.println (depthFirstSearch(g1,10));
         System.out.println ();
 
-        System.out.println("Test depth first search (fixed root) [private method]");
-        Node n = g1.getRandomNode();
-        System.out.println (n);
-        System.out.println (depthFirstSearch(n,5));
-        g1.flushFlags();
-        System.out.println (depthFirstSearch(n,3));
-        g1.flushFlags();
-        System.out.println (depthFirstSearch(n,2));
-        g1.flushFlags();
+        System.out.println("Test breadth first search (random root)");
+        System.out.println (breadthFirstSearch(g1,0));
+        System.out.println (breadthFirstSearch(g1,1));
+        System.out.println (breadthFirstSearch(g1,2));
+        System.out.println (breadthFirstSearch(g1,3));
+        System.out.println (breadthFirstSearch(g1,4));
+        System.out.println (breadthFirstSearch(g1,5));
+        System.out.println (breadthFirstSearch(g1,6));
+        System.out.println (breadthFirstSearch(g1,7));
+        System.out.println (breadthFirstSearch(g1,8));
+        System.out.println (breadthFirstSearch(g1,9));
+        System.out.println (breadthFirstSearch(g1,10));
         System.out.println ();
         
         
@@ -89,6 +108,26 @@ public class GraphAlgos {
         }
         return found;
     }
+    
+    public static Node breadthFirstSearch (Graph g, int val) {
+        Queue<Node> q = new ArrayDeque<Node>();
+        q.add (g.getRandomNode());
+        Node found = null;
+        while (!q.isEmpty()) {
+            Node n = q.remove();
+            if (n.getItem() == val) {
+                found = n;
+                break;
+            }
+            n.visit();
+            for (Node neighbor : n.getNeighbors().keySet())
+                if (!neighbor.visited())
+                    q.add(neighbor);
+        }
+        g.flushFlags();
+        return found;
+    }
+        
         
 
 }
