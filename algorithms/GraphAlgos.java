@@ -2,8 +2,13 @@ package algorithms;
 
 import data.graph.Node;
 import data.graph.Graph;
+
 import java.util.Queue;
 import java.util.ArrayDeque;
+import java.util.Comparator;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 
 public class GraphAlgos {
     public static void main (String[] args) {
@@ -81,6 +86,10 @@ public class GraphAlgos {
         System.out.println (breadthFirstSearch(g1,9));
         System.out.println (breadthFirstSearch(g1,10));
         System.out.println ();
+
+        System.out.println("Test Djikstra shortest path (random root)");
+        shortestPathsDjikstra(g1);
+        System.out.println ();
         
         
         
@@ -128,6 +137,64 @@ public class GraphAlgos {
         return found;
     }
         
+    private static class NodeAndVal {
+        public Node n;
+        public int val;
+        
+        public NodeAndVal (Node n, int val) {
+            this.n = n;
+            this.val = val;
+        }
+    }
+    
+    private static class NodeAndValComparator implements Comparator<NodeAndVal> {
+        public int compare (NodeAndVal a, NodeAndVal b) {
+            return (new Integer(b.val)).compareTo(a.val);
+        }
+    }
+    
+    public static void shortestPathsDjikstra (Graph g) {
+        Node root = g.getRandomNode();
+        System.out.println ("Root: " + root);
+    
+        ArrayList<NodeAndVal> q = new ArrayList<NodeAndVal>();
+        for (Node n : g.getNodes())
+            if (n == root)
+                q.add (new NodeAndVal(n,0));
+            else
+                q.add (new NodeAndVal(n,10000));
+        
+        NodeAndValComparator comp = new NodeAndValComparator();
+        ArrayList<NodeAndVal> finalDists = new ArrayList<NodeAndVal>(); 
+        
+        while (!q.isEmpty()) {
+            Collections.sort (q, comp);
+            NodeAndVal current = q.remove(q.size()-1);
+            finalDists.add (current);
+            HashMap<Node,Integer> neighbors = current.n.getNeighbors();
+            djikstraRelaxAll (current, neighbors, q);
+            
+        }
+        
+        for (NodeAndVal nav : finalDists)
+            System.out.print (nav.n + "(" + nav.val + "),");
+        System.out.println();
+    }
+    
+    private static void djikstraRelaxAll (NodeAndVal current, HashMap<Node,Integer> neighbors, ArrayList<NodeAndVal> q) {
+        for (Node neighbor : neighbors.keySet() ) {
+            for (NodeAndVal inQ : q) {
+                if (inQ.n == neighbor) {
+                    int tempDist = current.val + neighbors.get(neighbor);
+                    if (tempDist < inQ.val) {
+                        inQ.val = tempDist;
+                    }
+                    break;
+                }
+            }
+        }
+        
+    }
         
 
 }

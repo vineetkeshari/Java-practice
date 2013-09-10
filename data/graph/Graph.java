@@ -5,6 +5,11 @@ import java.util.Iterator;
 
 public class Graph {
     private HashSet<Node> nodes = new HashSet<Node>();
+    private int numNodes = 0;
+    
+    public HashSet<Node> getNodes () {
+        return (HashSet<Node>)(nodes.clone());
+    }
     
     public void addNodes (Node[] ns) {
         for (Node n : ns)
@@ -14,11 +19,17 @@ public class Graph {
     public void addNode (Node n) {
         if (!nodes.contains(n))
             nodes.add (n);
+        ++numNodes;
     }
     
     public void removeNode (Node n) {
         if (nodes.contains(n))
             nodes.remove(n);
+        --numNodes;
+    }
+    
+    public int count () {
+        return numNodes;
     }
     
     public void addEdge (Node n1, Node n2, int weight) {

@@ -49,7 +49,7 @@ public class Node {
         StringBuffer sb = new StringBuffer();
         sb.append(item + "[");
         for (Node n : neighbors.keySet())
-            sb.append(" "+n.getItem()+":"+neighbors.get(n)+",");
+            sb.append(n.getItem()+":"+neighbors.get(n)+",");
         sb.append ("]");
         return new String (sb);
     }
