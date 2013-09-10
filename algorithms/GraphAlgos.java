@@ -136,22 +136,6 @@ public class GraphAlgos {
         g.flushFlags();
         return found;
     }
-        
-    private static class NodeAndVal {
-        public Node n;
-        public int val;
-        
-        public NodeAndVal (Node n, int val) {
-            this.n = n;
-            this.val = val;
-        }
-    }
-    
-    private static class NodeAndValComparator implements Comparator<NodeAndVal> {
-        public int compare (NodeAndVal a, NodeAndVal b) {
-            return (new Integer(b.val)).compareTo(a.val);
-        }
-    }
     
     public static void shortestPathsDjikstra (Graph g) {
         Node root = g.getRandomNode();
@@ -181,19 +165,31 @@ public class GraphAlgos {
         System.out.println();
     }
     
+    private static class NodeAndVal {
+        public Node n;
+        public int val;
+        
+        public NodeAndVal (Node n, int val) {
+            this.n = n;
+            this.val = val;
+        }
+    }
+    
+    private static class NodeAndValComparator implements Comparator<NodeAndVal> {
+        public int compare (NodeAndVal a, NodeAndVal b) {
+            return (new Integer(b.val)).compareTo(a.val);
+        }
+    }
+    
     private static void djikstraRelaxAll (NodeAndVal current, HashMap<Node,Integer> neighbors, ArrayList<NodeAndVal> q) {
-        for (Node neighbor : neighbors.keySet() ) {
-            for (NodeAndVal inQ : q) {
+        for (Node neighbor : neighbors.keySet() )
+            for (NodeAndVal inQ : q)
                 if (inQ.n == neighbor) {
                     int tempDist = current.val + neighbors.get(neighbor);
-                    if (tempDist < inQ.val) {
+                    if (tempDist < inQ.val)
                         inQ.val = tempDist;
-                    }
                     break;
                 }
-            }
-        }
-        
     }
         
 
