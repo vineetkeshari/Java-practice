@@ -26,6 +26,14 @@ public class DynamicProgramming {
         System.out.println (longestCommonSubsequence ("ABCDEFGHIJKLMNOP", "XYZGRSTU"));
         System.out.println (longestCommonSubsequence ("", ""));
         System.out.println (longestCommonSubsequence ("", "A"));
+        System.out.println ();
+        
+        System.out.println ("Test 0-1 knapsack");
+        zeroOneKnapsack (new int[]{1,2,3,4}, 5);
+        zeroOneKnapsack (new int[]{1,2,3,4}, 6);
+        zeroOneKnapsack (new int[]{1,3,5}, 7);
+        zeroOneKnapsack (new int[]{}, 7);
+        zeroOneKnapsack (new int[]{1,2,5,8,10,20,50}, 74);
     }
     
     public static void kSumToM (int[] nums, int k, int m) {
@@ -88,4 +96,23 @@ public class DynamicProgramming {
             return result;
         }
     }
+    
+    public static void zeroOneKnapsack (int[] weights, int max) {
+        System.out.println ("Sum: " + zeroOneKnapsack (weights, max, weights.length-1) + " of max " + max);
+    }
+    
+    private static int zeroOneKnapsack (int[] weights, int max, int index) {
+        if (index == -1)
+            return 0;
+        int withoutMe = zeroOneKnapsack (weights, max, index-1);
+        if (max >= weights[index]) {
+            int withMe = weights[index] + zeroOneKnapsack (weights, max-weights[index], index-1);
+            if (withMe > withoutMe && withMe <= max)
+                return withMe;
+            else
+                return withoutMe;
+        } else
+            return withoutMe;
+    }
+        
 }
