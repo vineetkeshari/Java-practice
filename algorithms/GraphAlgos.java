@@ -91,8 +91,6 @@ public class GraphAlgos {
         shortestPathsDjikstra(g1);
         System.out.println ();
         
-        
-        
     }
     
     public static Node depthFirstSearch (Graph g, int val) {
@@ -191,6 +189,5 @@ public class GraphAlgos {
                     break;
                 }
     }
-        
 
 }
