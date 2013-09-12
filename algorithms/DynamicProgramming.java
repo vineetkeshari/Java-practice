@@ -33,7 +33,9 @@ public class DynamicProgramming {
         zeroOneKnapsack (new int[]{1,2,3,4}, 6);
         zeroOneKnapsack (new int[]{1,3,5}, 7);
         zeroOneKnapsack (new int[]{}, 7);
+        zeroOneKnapsack (new int[]{1,2,5,10,20,50}, 74);
         zeroOneKnapsack (new int[]{1,2,5,8,10,20,50}, 74);
+        zeroOneKnapsack (new int[]{1,2,5,8,10,20,50}, 0);
     }
     
     public static void kSumToM (int[] nums, int k, int m) {
