@@ -1,6 +1,7 @@
 package algorithms;
 
 import java.util.HashSet;
+import java.util.HashMap;
 
 public class DynamicProgramming {
     public static void main (String[] args) {
@@ -36,6 +37,27 @@ public class DynamicProgramming {
         zeroOneKnapsack (new int[]{1,2,5,10,20,50}, 74);
         zeroOneKnapsack (new int[]{1,2,5,8,10,20,50}, 74);
         zeroOneKnapsack (new int[]{1,2,5,8,10,20,50}, 0);
+        System.out.println ();
+        
+        System.out.println ("Test coins to sum");
+        coinsToSum (new int[]{1,2,5,10,20}, 3);
+        coinsToSum (new int[]{1,2,5,10,20}, 8);
+        coinsToSum (new int[]{1,2,5,10,20}, 13);
+        coinsToSum (new int[]{1,2,5,10,20}, 33);
+        coinsToSum (new int[]{1,2,5,10,20}, 37);
+        coinsToSum (new int[]{1,2,5,10,20}, 100);
+        coinsToSum (new int[]{1,2,5,7,10,20}, 3);
+        coinsToSum (new int[]{1,2,5,7,10,20}, 8);
+        coinsToSum (new int[]{1,2,5,7,10,20}, 13);
+        coinsToSum (new int[]{1,2,5,7,10,20}, 33);
+        coinsToSum (new int[]{1,2,5,7,10,20}, 37);
+        coinsToSum (new int[]{1,2,5,7,10,20}, 100);
+        coinsToSum (new int[]{}, 13);
+        coinsToSum (new int[]{1,2,3}, 0);
+        coinsToSum (new int[]{}, 0);
+        System.out.println ();
+        
+        
     }
     
     public static void kSumToM (int[] nums, int k, int m) {
@@ -116,5 +138,54 @@ public class DynamicProgramming {
         } else
             return withoutMe;
     }
+    
+    public static void coinsToSum (int[] denominations, int sum) {
+        HashSet<HashMap<Integer, Integer>> allSolutions = new HashSet<HashMap<Integer, Integer>>();
+        HashMap<Integer, Integer> running = new HashMap<Integer, Integer>();
+        System.out.println ("Min count : " + coinsToSum (denominations, denominations.length-1, sum, 0, -1, running, allSolutions));
+        for (HashMap<Integer, Integer> solution : allSolutions) {
+            for (int denomination : solution.keySet())
+                System.out.print (denomination + ":" + solution.get(denomination) + ",");
+            System.out.println();
+        }
+        System.out.println();
+    }
+    
+    private static int coinsToSum (int[] denominations, int index, int sum, int count, int minCount,
+            HashMap<Integer, Integer> running, HashSet<HashMap<Integer, Integer>> allSolutions) {
+        if (sum == 0) {
+            if (minCount == -1)
+                minCount = count;
+            if (count == minCount)
+                allSolutions.add((HashMap<Integer,Integer>)(running.clone()));
+            if (count < minCount) {
+                minCount = count;
+                allSolutions.clear();
+                allSolutions.add((HashMap<Integer,Integer>)(running.clone()));
+            }
+            return minCount;
+        }
+        if (sum < 0 || index < 0)
+            return minCount;    
+        if (minCount != -1 && count >= minCount)
+            return minCount;
+        
+        minCount = coinsToSum (denominations, index-1, sum, count, minCount, running, allSolutions);
+        if (denominations[index] <= sum) {
+            int myValue = denominations[index];
+            if (running.containsKey(myValue))
+                running.put(myValue, running.get(myValue)+1);
+            else
+                running.put(myValue, 1);
+            minCount = coinsToSum(denominations, index-1, sum-myValue, count+1, minCount, running, allSolutions);
+            minCount = coinsToSum(denominations, index, sum-myValue, count+1, minCount, running, allSolutions);
+            if (running.get(myValue) == 1)
+                running.remove(myValue);
+            else
+                running.put(myValue, running.get(myValue)-1);
+        }
+        return minCount;
+    }
+        
         
 }
