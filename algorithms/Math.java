@@ -4,8 +4,17 @@ public class Math {
     public static void main (String[] args) {
         System.out.println ("Test pow..");
         System.out.println (pow(0,0));
+        System.out.println (pow(1,0));
+        System.out.println (pow(1,1));
+        System.out.println (pow(1,-1));
+        System.out.println (pow(0,-1));
         System.out.println (pow(1,5));
         System.out.println (pow(5,2));
+        System.out.println (pow(5,-1));
+        System.out.println (pow(5,-2));
+        System.out.println (pow(2,-3));
+        System.out.println (pow(5,3));
+        System.out.println (pow(2,5));
         System.out.println ();
         
         System.out.println ("Test abs..");
@@ -57,10 +66,21 @@ public class Math {
         System.out.println ();
     }
     
-    public static double pow (double n, double p) {
-        if (p == 0)
+    public static double pow (double n, int p) {
+        if (n == 0.0)
+            return 0.0;
+        if (p == 0 || n == 1.0)
             return 1;
-        return n * pow (n, p-1);
+        if (p == 1)
+            return n;
+        if (p == 2)
+            return n*n;
+        if (p < 0) {
+            double inversePow = pow (n,-p);
+            return (inversePow == 0)? Double.NaN : 1.0/inversePow;
+        }
+        double floorPow = pow (pow(n, p/2), 2);
+        return floorPow * ((p % 2 == 0)? 1 : n);
     }
     
     public static double abs (double n) {

@@ -1,7 +1,11 @@
 package algorithms;
 
+import java.util.Set;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 
 public class DynamicProgramming {
     public static void main (String[] args) {
@@ -45,16 +49,40 @@ public class DynamicProgramming {
         coinsToSum (new int[]{1,2,5,10,20}, 13);
         coinsToSum (new int[]{1,2,5,10,20}, 33);
         coinsToSum (new int[]{1,2,5,10,20}, 37);
-        coinsToSum (new int[]{1,2,5,10,20}, 100);
+        coinsToSum (new int[]{1,2,5,10,20}, 101);
         coinsToSum (new int[]{1,2,5,7,10,20}, 3);
         coinsToSum (new int[]{1,2,5,7,10,20}, 8);
         coinsToSum (new int[]{1,2,5,7,10,20}, 13);
         coinsToSum (new int[]{1,2,5,7,10,20}, 33);
         coinsToSum (new int[]{1,2,5,7,10,20}, 37);
-        coinsToSum (new int[]{1,2,5,7,10,20}, 100);
+        coinsToSum (new int[]{1,2,5,7,10,20}, 101);
         coinsToSum (new int[]{}, 13);
         coinsToSum (new int[]{1,2,3}, 0);
         coinsToSum (new int[]{}, 0);
+        System.out.println ();
+        
+        System.out.println ("Test break into words");
+        Set<String> dictionary = new HashSet<String>();
+        dictionary.add("bed");
+        dictionary.add("bath");
+        dictionary.add("and");
+        dictionary.add("beyond");
+        dictionary.add("bat");
+        dictionary.add("hand");
+        dictionary.add("plucker");
+        dictionary.add("pluckers");
+        dictionary.add("wing");
+        dictionary.add("win");
+        dictionary.add("swing");
+        dictionary.add("bar");
+        dictionary.add("tab");
+        dictionary.add("on");
+        dictionary.add("be");
+        dictionary.add("at");
+        dictionary.add("a");
+        breakIntoWords ("bedbathandbeyond", dictionary);
+        breakIntoWords ("pluckerswingbar", dictionary);
+        breakIntoWords ("atabat", dictionary);
         System.out.println ();
         
         
@@ -186,6 +214,31 @@ public class DynamicProgramming {
         }
         return minCount;
     }
-        
+    
+    public static void breakIntoWords (String input, Set<String> dictionary) {
+        Set<List<String>> allBreakups = new HashSet<List<String>>();
+        ArrayList<String> currentSet = new ArrayList<String>();
+        breakIntoWords (input, 0, -1, dictionary, currentSet, allBreakups);
+        for (List<String> breakup : allBreakups) {
+            for (String word : breakup)
+                System.out.print(word + " ");
+            System.out.println();
+        }
+    }
+    
+    private static void breakIntoWords (String input, int index, int last, Set<String> dictionary, ArrayList<String> currentSet, Set<List<String>> allBreakups) {
+        if (index == input.length()) {
+            if (last == input.length()-1)
+                allBreakups.add ((ArrayList<String>)(currentSet.clone()));
+            return;
+        }
+        String word = input.substring(last+1,index+1);
+        if (dictionary.contains(word)) {
+            currentSet.add (word);
+            breakIntoWords (input, index+1, index, dictionary, currentSet, allBreakups);
+            currentSet.remove (currentSet.size()-1);
+        }
+        breakIntoWords (input, index+1, last, dictionary, currentSet, allBreakups);
+    }
         
 }
